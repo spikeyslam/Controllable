@@ -52,6 +52,11 @@ public class Controllable extends ControllerAdapter
         return options;
     }
 
+    public static ControllerInput getInput()
+    {
+        return input;
+    }
+
     private void onClientSetup(FMLClientSetupEvent event)
     {
         /* Loads up the controller manager and setup shutdown cleanup */
@@ -62,7 +67,7 @@ public class Controllable extends ControllerAdapter
         File configFolder = new File(mc.gameDir, "config");
 
         ControllerProperties.load(configFolder);
-        Controllable.options = new ControllerOptions(mc, mc.gameDir);
+        Controllable.options = new ControllerOptions(mc.gameDir);
 
         /* Attempts to load the first controller connected if auto select is enabled */
         if(options.isAutoSelect() && manager.getControllers().size > 0)

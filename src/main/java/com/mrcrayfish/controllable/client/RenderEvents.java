@@ -6,7 +6,6 @@ import com.mrcrayfish.controllable.Reference;
 import com.mrcrayfish.controllable.event.AvailableActionsEvent;
 import com.mrcrayfish.controllable.event.RenderAvailableActionsEvent;
 import com.mrcrayfish.controllable.event.RenderPlayerPreviewEvent;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.IngameGui;
@@ -15,8 +14,9 @@ import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.*;
-import net.minecraft.util.Hand;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -201,7 +201,7 @@ public class RenderEvents
         if(event.phase != TickEvent.Phase.END)
             return;
 
-        if(ControllerInput.lastUse <= 0)
+        if(Controllable.getInput().getLastUse() <= 0)
             return;
 
         Minecraft mc = Minecraft.getInstance();
@@ -266,7 +266,7 @@ public class RenderEvents
                 }
             }
 
-            if(mc.player != null && mc.currentScreen == null)
+            if(mc.player != null && mc.currentScreen == null && Controllable.getOptions().isRenderMiniPlayer())
             {
                 if(!MinecraftForge.EVENT_BUS.post(new RenderPlayerPreviewEvent()))
                 {

@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
-version = "1.14.4-0.5.1"
+version = "1.14.4-0.6.0"
 group = "com.mrcrayfish" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "controllable"
 
@@ -59,9 +59,13 @@ minecraft {
     }
 }
 
+configurations {
+    libraries
+    compile.extendsFrom libraries
+}
+
 dependencies {
     minecraft 'net.minecraftforge:forge:1.14.4-28.1.0'
-
 }
 
 repositories {
@@ -69,7 +73,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "uk.co.electronstudio.sdl2gdx:sdl2gdx:1.0.+"
+    libraries "uk.co.electronstudio.sdl2gdx:sdl2gdx:1.0.+"
 }
 
 jar {
@@ -86,7 +90,7 @@ jar {
         ])
     }
     from {
-        configurations.compileOnly.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.libraries.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
